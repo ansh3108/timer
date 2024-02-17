@@ -3,15 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap">
-    <title>Wait bruv :)</title>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            padding: 100px;
+            background-color: #111;
+            color: #00ff00;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #countdown {
+            font-size: 64px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+    <title>Green-themed Countdown Timer</title>
 </head>
 <body>
 
     <div id="countdown"></div>
 
-    <script src="script.js"></script>
+    <script>
+        // Set the date we're counting down to
+        const countDownDate = new Date('March 20, 2024 14:00:00').getTime();
+
+        // Update the countdown every 1 second
+        const x = setInterval(function() {
+
+            // Get the current date and time
+            const now = new Date().getTime();
+
+            // Calculate the remaining time
+            const distance = countDownDate - now;
+
+            // Calculate days, hours, minutes, and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the countdown
+            document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById('countdown').innerHTML = 'EXPIRED';
+            }
+        }, 1000);
+    </script>
 
 </body>
 </html>
