@@ -1,5 +1,3 @@
-
-
 // Set the date we're counting down to
 const countDownDate = new Date('March 20, 2024 00:00:00').getTime();
 
