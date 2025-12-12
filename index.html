@@ -17,49 +17,59 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 40px;
         }
 
-        #countdown {
-            font-size: 64px;
+        .timer-box {
+            font-size: 48px;
             font-weight: bold;
-            margin-bottom: 20px;
         }
     </style>
-    <title>Time Since Start</title>
+    <title>Timer</title>
 </head>
 <body>
 
-    <div id="countdown"></div>
+    <div id="count1" class="timer-box"></div>
+    <div id="count2" class="timer-box"></div>
 
     <script>
-        // Set the date we're counting from
-        const startDate = new Date('March 20, 2024 14:00:00').getTime();
+        const startDate1 = new Date('March 20, 2024 14:00:00').getTime();
+        const targetDate2 = new Date('March 27, 2026 17:00:00').getTime();
 
-        // Update the countdown every 1 second
-        const x = setInterval(function() {
-
-            // Get the current date and time
+        setInterval(function () {
             const now = new Date().getTime();
 
-            // Calculate the elapsed time
-            const distance = now - startDate;
+            // TIMER 1 — Time since 20 March 2024
+            const elapsed1 = now - startDate1;
+            const d1 = Math.floor(elapsed1 / (1000 * 60 * 60 * 24));
+            const h1 = Math.floor((elapsed1 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m1 = Math.floor((elapsed1 % (1000 * 60 * 60)) / (1000 * 60));
+            const s1 = Math.floor((elapsed1 % (1000 * 60)) / 1000);
 
-            // Calculate days, hours, minutes, and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('count1').innerHTML = `${d1}d ${h1}h ${m1}m ${s1}s`;
 
-            // Display the elapsed time
-            document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            // TIMER 2 — Countdown → Count-up after 27 March 2026
+            const diff2 = now - targetDate2;
 
-            // If the countdown is over, display a message
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById('countdown').innerHTML = 'EXPIRED';
+            let d2, h2, m2, s2;
+
+            if (diff2 < 0) {
+                const remaining = Math.abs(diff2);
+                d2 = Math.floor(remaining / (1000 * 60 * 60 * 24));
+                h2 = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                m2 = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                s2 = Math.floor((remaining % (1000 * 60)) / 1000);
+            } else {
+                d2 = Math.floor(diff2 / (1000 * 60 * 60 * 24));
+                h2 = Math.floor((diff2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                m2 = Math.floor((diff2 % (1000 * 60 * 60)) / (1000 * 60));
+                s2 = Math.floor((diff2 % (1000 * 60)) / 1000);
             }
+
+            document.getElementById('count2').innerHTML = `${d2}d ${h2}h ${m2}m ${s2}s`;
+
         }, 1000);
     </script>
 
-</body>   
+</body>
 </html>
